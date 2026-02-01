@@ -9,15 +9,15 @@ Built using Python, Streamlit, and local LLM inference via Ollama, ThreatMinds d
 
 ## 🔧 Feature & Description 
 ```
-**Log Ingestion & Retrieval** - Retrieves and ingests NetWitness log data from uploaded files or defined sources; Handles structured SOC log formats for downstream analysis. 
-**Log Parsing & Normalization** - Parses NetWitness logs into a normalized internal representation; Extracts key fields such as incident IDs, timestamps, events, and metadata
-**Incident Chunking** - Groups multiple alerts into a single incident context; Prevents LLM context overflow while preserving investigation relevance
-**Alert Summarization (LLM-Based)** - Uses a local Large Language Model (via Ollama) to generate human-readable summaries; Translates raw SOC logs into analyst-friendly explanations 
-**MITRE ATT&CK Mapping** - Maps detected behaviors to MITRE ATT&CK techniques; Provides technique IDs and contextual explanations for analyst reference 
-**Threat Triage & Severity Classification** -  Automatically assigns severity levels to incidents; Supports SOC Level 1 and Level 2 investigation workflows
-**Rule-Based Detection & Remediation** - Applies predefined security rules for known threat patterns; Generates deterministic remediation actions for common incidents
-**AI-Assisted Remediation Guidance** -  Augments rule-based decisions with AI-generated remediation explanations; Helps analysts understand recommended response actions
-**Streamlit-Based SOC Chatbot Interface** - Interactive web-based chatbot for investigation and analysis; Allows analysts to upload logs and ask follow-up questions
+Log Ingestion & Retrieval - Retrieves and ingests NetWitness log data from uploaded files or defined sources; Handles structured SOC log formats for downstream analysis. 
+Log Parsing & Normalization - Parses NetWitness logs into a normalized internal representation; Extracts key fields such as incident IDs, timestamps, events, and metadata
+Incident Chunking - Groups multiple alerts into a single incident context; Prevents LLM context overflow while preserving investigation relevance
+Alert Summarization (LLM-Based) - Uses a local Large Language Model (via Ollama) to generate human-readable summaries; Translates raw SOC logs into analyst-friendly explanations 
+MITRE ATT&CK Mapping - Maps detected behaviors to MITRE ATT&CK techniques; Provides technique IDs and contextual explanations for analyst reference 
+Threat Triage & Severity Classification -  Automatically assigns severity levels to incidents; Supports SOC Level 1 and Level 2 investigation workflows
+Rule-Based Detection & Remediation - Applies predefined security rules for known threat patterns; Generates deterministic remediation actions for common incidents
+AI-Assisted Remediation Guidance -  Augments rule-based decisions with AI-generated remediation explanations; Helps analysts understand recommended response actions
+Streamlit-Based SOC Chatbot Interface - Interactive web-based chatbot for investigation and analysis; Allows analysts to upload logs and ask follow-up questions
 ```
 ## 🗂️ Project Structure
 ```
