@@ -21,8 +21,7 @@ REST API & Web UI -  Offers both an API and Streamlit-based UI to interact with 
 ## 🗂️ Project Structure
 ```
 SOCGPT/
-├── 📂 data/                  # Sample logs, input data
-│   └── example_logs.txt
+├── 
 │
 ├── 📂 src/                   # Source code
 │   ├── log_analysis.py       # Handles log ingestion(Ryan Ashwin's part)
@@ -70,34 +69,31 @@ pip install -r requirements.txt
 > You need Python 3.8 or later.
 
 ---
+## 🚀 Running the SOC Chatbot Locally
 
-
-```
-
-
----
-
-### 3. 🧪 Run Log Analysis Pipeline
+### 1️⃣ Start the Local LLM (Ollama)
 
 ```bash
-python run_pipeline.py
-```
+ollama run alienintelligence/cyberaisecurity:latest
 
-It will read logs from `data/example_logs.txt` and email the summarized report.
-
----
-
-### 4. 🌐 Run REST API
 
 ```bash
-uvicorn api.main:app --reload
-```
+streamlit run ui/chatbot.py
 
-Then POST logs to `http://localhost:8000/analyze-log`.
+Once the application is running, you can:
 
----
+📂 Upload NetWitness log files for analysis
 
-### 5. 💻 Run the Streamlit UI
+💬 Ask investigation and triage questions as a SOC analyst
+
+🛡️ View MITRE ATT&CK mappings and remediation recommendations
+
+The chatbot interface will be available at:
+http://localhost:8501
+
+
+
+### 💻 Run the Streamlit UI
 
 ```bash
 streamlit run ui/app.py
@@ -105,62 +101,10 @@ streamlit run ui/app.py
 
 You can now upload logs via the browser and get real-time AI analysis.
 
----
-
-## 🧠 LLM Experiment Notebook
-
-Use `notebooks/llm_experiments.ipynb` to:
-
-* Test different GPT prompts
-* Compare summarization and remediation quality
-* Build custom templates for new log types
-
----
-
-## 📤 Sample Email Output
-
-```
-Subject: SOCGPT Alert Report
-
-🔍 Summary: Detected PowerShell command execution from suspicious source.
-🚦 Severity: High
-📋 MITRE ATT&CK: T1059 – Command and Scripting Interpreter
-🛡️ Remediation: Block the source IP and inspect endpoint for post-exploitation activity.
-```
-
----
-
-## 🛡️ MITRE ATT\&CK Integration
-
-Currently supported mappings:
-
-| Log Pattern    | Mapped Technique                          |
-| -------------- | ----------------------------------------- |
-| `powershell`   | T1059 – Command and Scripting Interpreter |
-| `login failed` | T1110 – Brute Force                       |
-| Others         | `Unknown Technique`                       |
-
-Expand `mitre_mapper.py` for additional coverage.
-
----
-
-## 📦 Docker (Optional)
-
-You can also run this as a container:
-
-```bash
-docker build -t socgpt .
-docker run -p 8501:8501 socgpt
-```
-
-
-
-
----
 
 ## ✨ Credits
 
-Developed by **Ryan Ashwin, Christopher Lee, Harelingwesharan**
+Developed by **Christopher Lee Shiven Jian Fu, Ryan Ashwin s/o Ashraf Ali,  Harelingeshwaran S/O Kaliyaperumal**
 
 
 
