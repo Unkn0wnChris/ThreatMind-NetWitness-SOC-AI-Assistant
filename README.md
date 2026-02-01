@@ -9,38 +9,40 @@ Built using Python, Streamlit, and local LLM inference via Ollama, ThreatMinds d
 
 ## 🔧 Feature & Description 
 ```
-Log Analysis - Parses and ingests raw logs from Suricata, Zeek, Windows Event Logs, etc. 
-Alert Summarization - Uses OpenAI's GPT to generate readable summaries for raw technical logs. 
-Threat Triage - Automatically prioritizes alerts by analyzing severity and behavior. 
-Remediation Suggestions - Recommends first response actions like IP blocking or user account isolation. 
-MITRE ATT&CK Mapping - Maps detected behavior to MITRE ATT&CK techniques (e.g., T1059). 
-Analyst Q&A (Explain Threats) -  Analysts can ask follow-up questions about logs or threats. 
-Slack/Email Notifications - Sends analysis reports directly to the SOC via email or chat platforms. 
-REST API & Web UI -  Offers both an API and Streamlit-based UI to interact with the system.
+Log Ingestion & Retrieval - Retrieves and ingests NetWitness log data from uploaded files or defined sources; Handles structured SOC log formats for downstream analysis. 
+Log Parsing & Normalization - Parses NetWitness logs into a normalized internal representation; Extracts key fields such as incident IDs, timestamps, events, and metadata
+Incident Chunking - Groups multiple alerts into a single incident context; Prevents LLM context overflow while preserving investigation relevance
+Alert Summarization (LLM-Based) - Uses a local Large Language Model (via Ollama) to generate human-readable summaries; Translates raw SOC logs into analyst-friendly explanations 
+MITRE ATT&CK Mapping - Maps detected behaviors to MITRE ATT&CK techniques; Provides technique IDs and contextual explanations for analyst reference 
+Threat Triage & Severity Classification -  Automatically assigns severity levels to incidents; Supports SOC Level 1 and Level 2 investigation workflows
+Rule-Based Detection & Remediation - Applies predefined security rules for known threat patterns; Generates deterministic remediation actions for common incidents
+AI-Assisted Remediation Guidance -  Augments rule-based decisions with AI-generated remediation explanations; Helps analysts understand recommended response actions
+Streamlit-Based SOC Chatbot Interface - Interactive web-based chatbot for investigation and analysis; Allows analysts to upload logs and ask follow-up questions
 ```
 ## 🗂️ Project Structure
 ```
-SOCGPT/
+ThreatMinds/
 ├── 
 │
 ├── 📂 src/                   # Source code
 │   ├── log_analysis.py       # Handles log ingestion(Ryan Ashwin's part)
+│   ├── netwitness_parser.py  # Parses and normalizes NetWitness log formats (Ryan Ashwin's part)    
+│   ├── log_retrieval.py      # Handles log ingestion(Ryan Ashwin's part)
 │   ├── summarizer.py         # Uses LLM to summarize logs(Chris's part)
 │   ├── triage.py             # Severity classification(Ryan Ashwin's part)
-│   ├── remediation.py        # Suggests first response actions(Chris' part)
+│   ├── remediation.py        # Generates remediation actions (AI / rule-based/Hybrid) (Ryan Ashwin's part)
 │   ├── mitre_mapper.py       # MITRE ATT&CK technique mapping(Chris and team)
-│   ├── threat_explainer.py   # Q&A with LLM for analyst(Chris' part)
-│   └── notifier.py           # Email / Slack integration(Chris' part)
+│   ├── rule_engine.py       # MITRE ATT&CK technique mapping(Chris and team)
+│   ├── json_chunker.py       # Incident chunking to manage large log contexts (Ryan Ashwin's part)
+
+
 │
-├── 📂 api/                   # Optional: REST API (FastAPI / Flask)
+├── 📂 api/                   # REST API (FastAPI)
 │   └── main.py               # REST endpoint to submit logs
 │
-├── 📂 ui/                    # Optional: Streamlit or Web UI
+├── 📂 ui/                    # Streamlit or Web UI
 │   └── app.py
-│
-├── 📂 notebooks/             # Jupyter notebooks for prototyping
-│   └── llm_experiments.ipynb
-│
+
 ├── 📂 config/                # Config files (API keys, mappings)
 │   └── settings.yaml
 │
@@ -50,9 +52,7 @@ SOCGPT/
 │
 ├── .env                      # Environment variables (never push to GitHub)
 ├── requirements.txt          # Python dependencies
-├── Dockerfile                # Container setup
 ├── README.md                 # GitHub landing page
-└── run_pipeline.py           # Main script to test end-to-end flow 
 ```
 
 
@@ -93,12 +93,6 @@ The chatbot interface will be available at:
 http://localhost:8501
 
 
-
-### 💻 Run the Streamlit UI
-
-```bash
-streamlit run ui/app.py
-```
 
 You can now upload logs via the browser and get real-time AI analysis.
 
