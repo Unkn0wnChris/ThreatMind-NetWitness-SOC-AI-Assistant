@@ -75,8 +75,9 @@ pip install -r requirements.txt
 
 ```bash
 ollama run alienintelligence/cyberaisecurity:latest
+```bash
 
-
+### 💻 Run the Streamlit UI
 ```bash
 streamlit run ui/chatbot.py
 
