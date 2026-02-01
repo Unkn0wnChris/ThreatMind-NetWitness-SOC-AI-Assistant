@@ -88,7 +88,7 @@ pip install -r requirements.txt
 ```bash
 ollama run alienintelligence/cyberaisecurity:latest
 ````
-                 ## OR
+                  OR
                  
 ## Running the SOC Chatbot on GPU Cloud Instances(e.g. Lambda Cloud)
 ```bash
