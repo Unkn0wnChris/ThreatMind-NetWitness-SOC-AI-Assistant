@@ -1,0 +1,805 @@
+{
+  "rules": [
+    {
+      "id": "AUTH-FAIL-001",
+      "severity": 40,
+      "description": "Failed authentication activity detected",
+      "conditions_any": {
+        "incident_name": ["failed login", "authentication", "login failure"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Validate alert accuracy",
+          "Review authentication logs"
+        ],
+        "L2 SOC Analyst": [
+          "Check for brute-force attempts",
+          "Correlate source IPs across incidents"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Assess credential attack exposure",
+          "Recommend additional detections"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Map behavior to MITRE credential access techniques"
+        ]
+      }
+    },
+
+    {
+      "id": "AUTH-AFTERHOURS-001",
+      "severity": 45,
+      "description": "Authentication activity outside business hours",
+      "conditions_any": {
+        "incident_name": ["outside business hours", "after hours", "night", "weekend"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Validate login legitimacy",
+          "Check source IP address"
+        ],
+        "L2 SOC Analyst": [
+          "Review historical login behavior",
+          "Check VPN or remote access usage"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Assess insider threat or compromised account risk"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Analyze off-hours access TTPs"
+        ]
+      }
+    },
+
+    {
+      "id": "EXFIL-GENERIC-001",
+      "severity": 85,
+      "description": "Potential data exfiltration activity",
+      "conditions_any": {
+        "incident_name": ["exfiltration", "ftp", "upload", "data transfer"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate to L2 immediately",
+          "Preserve relevant logs"
+        ],
+        "L2 SOC Analyst": [
+          "Review outbound traffic patterns",
+          "Validate destination legitimacy"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Initiate containment procedures",
+          "Assess potential data exposure"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Identify exfiltration techniques and tooling"
+        ]
+      }
+    },
+
+    {
+      "id": "HIGH-RISK-001",
+      "severity": 95,
+      "description": "High risk score incident detected",
+      "conditions_any": {
+        "risk_score": ["70", "80", "90", "100"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate incident immediately"
+        ],
+        "L2 SOC Analyst": [
+          "Perform scoped investigation"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Initiate full incident response process"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Extract indicators for intelligence enrichment"
+        ]
+      }
+    },
+
+    {
+      "id": "LOW-RISK-NOISE-001",
+      "severity": 20,
+      "description": "Low risk or noisy alert",
+      "conditions_all": {
+        "priority": ["low"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Monitor for recurrence",
+          "Close if confirmed benign"
+        ],
+        "L2 SOC Analyst": [
+          "Tune detection logic if false positive"
+        ],
+        "L3 SOC Analyst / IR": [
+          "No immediate action required"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "No intelligence action required"
+        ]
+      }
+    },
+
+    {
+      "id": "LATERAL-MOVE-001",
+      "severity": 80,
+      "description": "Suspected lateral movement activity detected",
+      "conditions_any": {
+        "incident_name": ["lateral movement", "backdoor", "pwdump", "credential access"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate to L2 immediately",
+          "Document affected systems and users",
+          "Preserve memory dumps and event logs",
+          "Identify initial compromise vector"
+        ],
+        "L2 SOC Analyst": [
+          "Trace attack path across network",
+          "Identify all compromised systems",
+          "Check for persistence mechanisms",
+          "Correlate with other incidents from same actor"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Initiate containment and isolation procedures",
+          "Coordinate full incident response",
+          "Assess scope of credential compromise",
+          "Develop eradication strategy",
+          "Plan credential reset for affected accounts"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Map lateral movement techniques to MITRE ATT&CK",
+          "Identify attack pattern and tooling",
+          "Build indicators of compromise (IOCs)",
+          "Assess if part of known campaign"
+        ]
+      }
+    },
+
+    {
+      "id": "WEBSHELL-DETECT-001",
+      "severity": 90,
+      "description": "Encoded webshell detected on web server",
+      "conditions_any": {
+        "incident_name": ["webshell", "encoded", "command-and-control", "aspx"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate critical - possible breach",
+          "Document source IP and payload details",
+          "Check for similar patterns on other servers",
+          "Preserve web server logs and access patterns"
+        ],
+        "L2 SOC Analyst": [
+          "Verify webshell presence on disk",
+          "Extract and analyze webshell code",
+          "Identify upload mechanism and timeline",
+          "Check for command execution history",
+          "Review web application logs for post-exploitation"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Take affected web server offline for forensics",
+          "Identify how attacker gained initial access",
+          "Assess what commands were executed via webshell",
+          "Determine scope of data access/exfiltration",
+          "Implement secure remediation plan",
+          "Harden web application and access controls"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Analyze webshell code for attribution",
+          "Correlate source IP with known threat actors",
+          "Identify exploitation techniques (T1071, T1190)",
+          "Create detection signatures for variants"
+        ]
+      }
+    },
+
+    {
+      "id": "EXPLOIT-STRUTS-001",
+      "severity": 85,
+      "description": "Apache Struts exploitation attempt detected",
+      "conditions_any": {
+        "incident_name": ["apache struts", "exploit", "credential-access"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate immediately - active exploitation",
+          "Document attacker IP and HTTP details",
+          "Check target system vulnerability status",
+          "Preserve web logs and system telemetry"
+        ],
+        "L2 SOC Analyst": [
+          "Verify if exploitation was successful",
+          "Check for payload delivery or code execution",
+          "Review application logs for suspicious activity",
+          "Scan system for post-exploitation artifacts",
+          "Check for lateral movement attempts post-exploit"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Assess exploitation impact and data exposure",
+          "Verify vulnerable Apache Struts version status",
+          "Determine if patch or mitigation was effective",
+          "Review system for command execution evidence",
+          "Initiate patching/upgrade procedures",
+          "Monitor for follow-up attacks from same source"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Identify specific Apache Struts CVE being targeted",
+          "Correlate attacker IP with known threat campaigns",
+          "Map exploitation to MITRE techniques",
+          "Assess tool sophistication and actor capability"
+        ]
+      }
+    },
+
+    {
+      "id": "FTP-EXFIL-001",
+      "severity": 80,
+      "description": "Outbound FTP transfer of sensitive data detected",
+      "conditions_any": {
+        "incident_name": ["ftp", "exfiltration", "outbound", "intellectual property"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate - potential data breach",
+          "Document file names and transfer details",
+          "Identify source user and system",
+          "Check destination IP geolocation",
+          "Preserve network packet captures"
+        ],
+        "L2 SOC Analyst": [
+          "Verify what data was transferred",
+          "Check historical FTP activity by user",
+          "Confirm if user has legitimate business reason",
+          "Analyze full FTP session for additional files",
+          "Check for command injection or suspicious activity"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Determine if data exfiltration was successful",
+          "Identify source of unauthorized access",
+          "Assess scope of data exposure",
+          "Initiate data breach response procedures",
+          "Disable compromised credentials",
+          "Block destination IP globally",
+          "Notify legal and compliance teams"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Research destination IP ownership and hosting provider",
+          "Identify if FTP server is known for illicit activity",
+          "Correlate with other exfiltration attempts",
+          "Build indicators for blocking and detection"
+        ]
+      }
+    },
+
+    {
+      "id": "ROUTER-CONFIG-001",
+      "severity": 65,
+      "description": "Suspicious router configuration change attempts detected",
+      "conditions_any": {
+        "incident_name": ["router configuration", "configuration activity", "network infrastructure"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Verify source of configuration attempt",
+          "Document timestamp and configuration changes",
+          "Check if change was authorized/scheduled",
+          "Preserve router audit logs and configuration backup"
+        ],
+        "L2 SOC Analyst": [
+          "Review change management process",
+          "Verify source IP is legitimate admin location",
+          "Check if user account has proper authorization",
+          "Compare config against known-good baseline",
+          "Identify what settings were attempted to change"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Assess impact of configuration changes if successful",
+          "Review network traffic patterns for anomalies",
+          "Check for persistence mechanisms or backdoors",
+          "Verify router hasn't been compromised",
+          "Implement change control and monitoring",
+          "Restrict router access to authorized IPs only"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Research if part of known router exploitation campaign",
+          "Identify techniques used (T1598, T1190)",
+          "Assess actor capability and objectives"
+        ]
+      }
+    },
+
+    {
+      "id": "MULTI-FAILED-LOGIN-001",
+      "severity": 55,
+      "description": "Multiple failed login attempts from single source to multiple users",
+      "conditions_any": {
+        "incident_name": ["multiple failed logins", "failed logins from multiple users", "multiple failed logons"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Document source IP and target systems",
+          "Count total failed attempts",
+          "Check if pattern matches known testing activity",
+          "Review for account lockouts or alerts"
+        ],
+        "L2 SOC Analyst": [
+          "Assess brute-force attack likelihood",
+          "Check historical source IP reputation",
+          "Correlate with other attack patterns",
+          "Verify if multi-factor authentication blocked attacks",
+          "Check for password spray vs. targeted attacks"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Determine if credentials were compromised",
+          "Review for successful logins by attacker",
+          "Implement rate limiting on login attempts",
+          "Consider account lockout policies",
+          "Monitor for follow-up attacks",
+          "Reset passwords if compromise suspected"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Research source IP for threat intelligence",
+          "Identify if part of coordinated attack campaign",
+          "Map techniques to MITRE credential access"
+        ]
+      }
+    },
+
+    {
+      "id": "PHISHING-OBFUSCATED-001",
+      "severity": 75,
+      "description": "Phishing or malware delivery with obfuscated links/filenames detected",
+      "conditions_any": {
+        "incident_name": ["phishing", "obfuscated link", "space after filename", "defense-evasion"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate to L2 - likely malware delivery",
+          "Document source IP and affected targets",
+          "Block source IP at perimeter immediately",
+          "Identify all recipients/affected systems",
+          "Preserve email headers and content"
+        ],
+        "L2 SOC Analyst": [
+          "Analyze obfuscation technique and payload",
+          "Check if executable was downloaded/executed",
+          "Review email gateway logs for similar patterns",
+          "Trace phishing campaign scope",
+          "Check for email forwarding rules or compromise"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Determine if malware was executed on endpoints",
+          "Scan affected systems for malware artifacts",
+          "Assess if multi-stage attack occurred",
+          "Initiate host isolation if infection confirmed",
+          "Coordinate malware analysis",
+          "Implement email filtering rules to block variant"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Extract and analyze obfuscation technique (T1036.006)",
+          "Identify malware family and capabilities",
+          "Research phishing campaign attribution",
+          "Create detection signatures for payload",
+          "Assess tie to known threat actor groups"
+        ]
+      }
+    },
+
+    {
+      "id": "CREDENTIAL-COMPROMISE-001",
+      "severity": 70,
+      "description": "Failed login attempts followed by successful authentication - credential compromise indicator",
+      "conditions_any": {
+        "incident_name": ["multiple failed logins followed by successful login", "failed login successful", "credential compromise"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate - likely successful credential compromise",
+          "Document failed vs successful login timeline",
+          "Identify target user and authenticating system",
+          "Review what activities occurred after successful login",
+          "Preserve all relevant authentication logs"
+        ],
+        "L2 SOC Analyst": [
+          "Determine if credentials are actively compromised",
+          "Review successful login and subsequent activity",
+          "Check for lateral movement post-authentication",
+          "Assess if MFA was bypassed or not enabled",
+          "Correlate with other suspicious user activity"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Immediately reset compromised account credentials",
+          "Force re-authentication for all active sessions",
+          "Review all user activity since successful login",
+          "Assess what data/systems attacker accessed",
+          "Determine if additional accounts compromised",
+          "Implement credential reset campaign if widespread",
+          "Enable enhanced monitoring for account"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Determine attack vector and credential source",
+          "Assess if part of coordinated campaign",
+          "Track credential reuse across other victims",
+          "Identify exploitation techniques (T1021)"
+        ]
+      }
+    },
+
+    {
+      "id": "ACCOUNT-LIFECYCLE-ANOMALY-001",
+      "severity": 45,
+      "description": "Rapid account creation and deletion - potential temporary malicious account",
+      "conditions_any": {
+        "incident_name": ["account created and deleted", "user account created deleted", "rapid account lifecycle"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Document account name and creation/deletion timeline",
+          "Identify who created and deleted the account",
+          "Check if account was used for authentication",
+          "Preserve account activity logs",
+          "Review if account creation was authorized"
+        ],
+        "L2 SOC Analyst": [
+          "Analyze purpose of temporary account",
+          "Check AD/directory logs for account activity",
+          "Verify if account was used for lateral movement",
+          "Review what systems account accessed",
+          "Correlate with other security events on same timeline"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Assess if temporary account was created for persistence",
+          "Review systems accessed during account lifetime",
+          "Determine if insider activity or attacker-created",
+          "Check for similar temporary account patterns",
+          "Implement audit logging for account lifecycle events",
+          "Monitor for repeat offenders"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Research if technique matches known APT patterns",
+          "Identify if part of coordinated compromise",
+          "Map to MITRE persistence techniques (T1136)"
+        ]
+      }
+    },
+
+    {
+      "id": "POST-COMPROMISE-DISCOVERY-001",
+      "severity": 72,
+      "description": "Suspicious file and directory discovery behavior - post-compromise reconnaissance",
+      "conditions_any": {
+        "incident_name": ["multiple suspicious behaviors", "file and directory discovery", "discovery"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate immediately - indicators of compromise",
+          "Document affected system IP and hostname",
+          "Preserve event logs and process execution history",
+          "Check if system shows other compromise indicators",
+          "Identify user account initiating discovery"
+        ],
+        "L2 SOC Analyst": [
+          "Analyze discovery pattern and scope",
+          "Determine what files/directories were enumerated",
+          "Check for subsequent lateral movement attempts",
+          "Review system for malware or persistence mechanisms",
+          "Correlate discovery with other suspicious activities",
+          "Assess if reconnaissance for data theft"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Determine if system is compromised",
+          "Isolate system if malware/backdoor confirmed",
+          "Perform full forensic analysis",
+          "Identify initial compromise vector",
+          "Assess what sensitive data attacker may have accessed",
+          "Check for data exfiltration attempts",
+          "Coordinate remediation and re-imaging if needed"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Research reconnaissance technique (T1083, T1135)",
+          "Identify if part of known attack campaign",
+          "Determine actor objectives from discovery pattern",
+          "Assess threat actor sophistication and TTPs"
+        ]
+      }
+    },
+
+    {
+      "id": "ACCOUNT-LOCKOUT-PATTERN-001",
+      "severity": 35,
+      "description": "Multiple account lockouts from same or different users - potential brute force or noisy credentials",
+      "conditions_any": {
+        "incident_name": ["account lockouts", "multiple account lockouts", "lockout from"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Document all locked out account names",
+          "Identify common time period and source IPs",
+          "Check for legitimate reasons (password reset, misconfig)",
+          "Preserve authentication and lockout logs"
+        ],
+        "L2 SOC Analyst": [
+          "Determine root cause of lockouts",
+          "Check if coordinated attack or random failed attempts",
+          "Review for password spray or brute force indicators",
+          "Correlate with other authentication failures"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Determine if breach investigation needed",
+          "Assess lockout policy effectiveness",
+          "Monitor for follow-up attacks from same source"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "If attack confirmed, research source IP reputation",
+          "Identify if part of known credential stuffing campaign"
+        ]
+      }
+    },
+
+    {
+      "id": "SMB-LATERAL-DISCOVERY-001",
+      "severity": 78,
+      "description": "SMB lateral movement with system discovery and enumeration activities",
+      "conditions_any": {
+        "incident_name": ["multiple suspicious activities following email", "smb", "lateral movement", "samr", "netrenum"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate immediately - active lateral movement",
+          "Document source and destination systems",
+          "Preserve SMB logs and network captures",
+          "Check for similar activity patterns from same source",
+          "Identify user account performing lateral movement"
+        ],
+        "L2 SOC Analyst": [
+          "Trace complete attack path across network",
+          "Identify all systems enumerated and accessed",
+          "Analyze SMB shares accessed and files touched",
+          "Check for credential dumping or privilege escalation",
+          "Correlate with initial compromise vector",
+          "Review for data access or exfiltration indicators"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Isolate affected systems from network if active threat",
+          "Conduct forensic analysis on compromised systems",
+          "Identify scope of attacker's lateral movement",
+          "Assess what sensitive data was accessed",
+          "Determine if persistence mechanisms installed",
+          "Coordinate comprehensive remediation",
+          "Reset credentials for all potentially compromised accounts"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Map SMB enumeration to MITRE techniques (T1021.002, T1087)",
+          "Identify if part of known ransomware or APT campaign",
+          "Assess attacker objectives based on enumeration pattern",
+          "Build indicators for detection and blocking"
+        ]
+      }
+    },
+
+    {
+      "id": "CLOUD-C2-SUSPICIOUS-001",
+      "severity": 82,
+      "description": "Suspicious outbound connections to cloud infrastructure - potential C2 or data exfiltration",
+      "conditions_any": {
+        "incident_name": ["multiple suspicious activities following email", "amazonaws", "cloud", "suspicious outbound", "outbound connection"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate - potential C2 or data theft",
+          "Document affected system and destination cloud service",
+          "Preserve firewall and proxy logs",
+          "Check for similar patterns to other systems",
+          "Identify user/process initiating connections"
+        ],
+        "L2 SOC Analyst": [
+          "Determine purpose of cloud connection",
+          "Check if connection is legitimate business use",
+          "Analyze volume and frequency of data transfer",
+          "Review destination bucket/service purpose",
+          "Assess if system shows malware indicators",
+          "Check for known C2 AWS infrastructure",
+          "Review system for backdoors or shells"
+        ],
+        "L3 SOC Analyst / IR": [
+          "If C2 confirmed, isolate system immediately",
+          "Perform full forensic analysis",
+          "Identify malware family and capabilities",
+          "Determine if data was exfiltrated to cloud",
+          "Contact cloud provider for data preservation",
+          "Block cloud destinations at perimeter",
+          "Assess scope of compromise and data exposure",
+          "Coordinate incident response and remediation"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Research AWS destination for illicit use history",
+          "Identify if known C2 infrastructure",
+          "Correlate with known malware families",
+          "Determine threat actor and objectives",
+          "Create indicators for detection"
+        ]
+      }
+    },
+
+    {
+      "id": "UNAUTHORIZED-SAAS-001",
+      "severity": 50,
+      "description": "Unauthorized SaaS application activity - policy violation or potential data exfiltration",
+      "conditions_any": {
+        "incident_name": ["chatgpt", "chatgpt activity", "unauthorized saas", "policy violation", "unsanctioned"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Document system, user, and application details",
+          "Identify type of SaaS application and access method",
+          "Check for business justification or authorization",
+          "Preserve proxy/firewall logs of activity",
+          "Review other users on same system for similar activity"
+        ],
+        "L2 SOC Analyst": [
+          "Verify if application is on approved list",
+          "Review what data was accessed/transmitted",
+          "Check user's access scope and sensitivity level",
+          "Correlate with other policy violations",
+          "Assess if deliberate or accidental access",
+          "Check for data exfiltration patterns"
+        ],
+        "L3 SOC Analyst / IR": [
+          "If authorized - document exception and update policy",
+          "If unauthorized - enforce access restrictions",
+          "Review data sensitivity of what was accessed",
+          "Determine if credentials/secrets were exposed",
+          "Implement proxy rules to block unauthorized SaaS",
+          "Provide user security awareness training",
+          "Monitor for policy violation repeat offenders"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Assess SaaS application security posture",
+          "Research if application targeted by attackers",
+          "Identify potential data exposure risk",
+          "Evaluate similar applications for risk profile"
+        ]
+      }
+    },
+
+    {
+      "id": "EMAIL-ATTACHMENT-EXFIL-001",
+      "severity": 80,
+      "description": "Outbound email with file attachments - potential data exfiltration or compromise indicator",
+      "conditions_any": {
+        "incident_name": ["outbound email containing file attachment", "email attachment", "spearphishing attachment", "exfiltration"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate - potential data breach",
+          "Document sender account and recipient email",
+          "Identify attachment filenames and types",
+          "Preserve email logs and headers",
+          "Check if recipient is external to organization",
+          "Review for other suspicious emails from same user"
+        ],
+        "L2 SOC Analyst": [
+          "Verify legitimacy of email and recipient",
+          "Check if user normally sends emails to this recipient",
+          "Analyze file types and naming patterns",
+          "Determine file sensitivity and data classification",
+          "Check if files contain intellectual property or secrets",
+          "Review user's access history for those files",
+          "Assess if user account may be compromised"
+        ],
+        "L3 SOC Analyst / IR": [
+          "If breach confirmed - initiate data breach response",
+          "Contact recipients to request file deletion",
+          "Work with legal/compliance on notification",
+          "Force password reset for compromised account",
+          "Scan system for malware/backdoors",
+          "Review email forwarding rules for unauthorized rules",
+          "Implement email controls for sensitive data",
+          "Monitor for additional unauthorized email activity"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "If attack vector - analyze attacker objectives",
+          "Identify exfiltration technique and sophistication",
+          "Assess if part of organized theft campaign",
+          "Map to MITRE exfiltration techniques (T1020, T1048)"
+        ]
+      }
+    },
+
+    {
+      "id": "RANSOMWARE-CRITICAL-001",
+      "severity": 99,
+      "description": "Ransomware attack detected - CRITICAL incident requiring immediate response",
+      "conditions_any": {
+        "incident_name": ["ransomware", "cerber", "data encrypted for impact", "encryption", "impact"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "CRITICAL ESCALATION - ransomware detected",
+          "Immediately notify IR team and management",
+          "Document affected systems and user accounts",
+          "Preserve all logs and forensic evidence",
+          "Begin network isolation planning"
+        ],
+        "L2 SOC Analyst": [
+          "Identify scope of encryption activity",
+          "Map all encrypted file shares and systems",
+          "Determine ransomware variant and family",
+          "Check for ransom notes or attacker communications",
+          "Identify patient zero and infection vector",
+          "Review for lateral movement before encryption"
+        ],
+        "L3 SOC Analyst / IR": [
+          "IMMEDIATE: Isolate affected systems and segments",
+          "Conduct triage on unencrypted backups",
+          "Determine recovery point objective (RPO)",
+          "Contact law enforcement and threat intelligence",
+          "DO NOT PAY RANSOM without legal/FBI guidance",
+          "Begin system restoration from clean backups",
+          "Maintain forensic evidence for investigation",
+          "Assess and close attack entry point",
+          "Implement enhanced monitoring and hardening",
+          "Prepare incident disclosure and breach notification"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Identify ransomware variant and capabilities",
+          "Research known decryption tools availability",
+          "Attribute to threat actor group if possible",
+          "Share indicators with threat intelligence community",
+          "Track attacker demands and ransom payments",
+          "Map to MITRE impact techniques (T1486, T1561)"
+        ]
+      }
+    },
+
+    {
+      "id": "EXPLOIT-KIT-DETECTION-001",
+      "severity": 85,
+      "description": "Exploit kit detected - active malware delivery and system compromise",
+      "conditions_any": {
+        "incident_name": ["exploit kit", "rig exploit", "malicious file", "execution"]
+      },
+      "actions": {
+        "L1 SOC Analyst": [
+          "Escalate immediately - active malware delivery",
+          "Document source system and delivery method",
+          "Preserve web logs and packet captures",
+          "Identify if files were downloaded/executed",
+          "Check for similar exploit kit activity"
+        ],
+        "L2 SOC Analyst": [
+          "Identify specific exploit kit variant",
+          "Analyze payloads and shellcode if captured",
+          "Determine if code execution was successful",
+          "Check system for post-exploitation artifacts",
+          "Review browser and application logs",
+          "Assess what vulnerabilities were targeted",
+          "Check for backdoors or persistence mechanisms"
+        ],
+        "L3 SOC Analyst / IR": [
+          "Isolate system if malware execution confirmed",
+          "Perform memory forensics to identify payloads",
+          "Scan for indicators of compromise (IOCs)",
+          "Assess if system is beaconing to C2",
+          "Review for lateral movement post-compromise",
+          "Determine if data was accessed or exfiltrated",
+          "Full system rebuild if necessary",
+          "Patch vulnerabilities exploited by kit"
+        ],
+        "Cyber Threat Intelligence Analyst (CTI)": [
+          "Identify exploit kit name and operator",
+          "Analyze payload and malware family",
+          "Research hosting and infrastructure",
+          "Attribute to known threat actor if possible",
+          "Create detection signatures for payloads",
+          "Map to MITRE execution techniques (T1204, T1566)"
+        ]
+      }
+    }
+  ]
+}
