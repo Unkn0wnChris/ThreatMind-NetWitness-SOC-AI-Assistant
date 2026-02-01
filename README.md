@@ -91,7 +91,7 @@ Once the application is running, you can:
 
 The chatbot interface will be available at:
 http://localhost:8501
-
+````
 
 
 You can now upload logs via the browser and get real-time AI analysis.
