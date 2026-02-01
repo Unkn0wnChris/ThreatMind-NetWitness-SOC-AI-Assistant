@@ -1,0 +1,4 @@
+#openai_api_key: "your-key"
+ollama_mistral_api_key: http://localhost:11434/
+sender_email: 23000465@myrp.edu.sg
+email_password: password 

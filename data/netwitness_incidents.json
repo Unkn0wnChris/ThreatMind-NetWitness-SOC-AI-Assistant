@@ -1,0 +1,193 @@
+{
+  "incidents": [
+    {
+      "_id": "INC-126",
+      "name": "File Upload from Critical Systems to Dynamic DNS",
+      "summary": "",
+      "priority": "HIGH",
+      "riskScore": 70,
+      "status": "IN_PROGRESS",
+      "alertCount": 1,
+      "averageAlertRiskScore": 70,
+      "created": {
+        "$date": "2024-09-16T22:27:44.971Z"
+      },
+      "lastUpdated": {
+        "$date": "2024-09-16T22:29:05.859Z"
+      },
+      "assignee": {
+        "id": "sam",
+        "emailAddress": "s.polanco@prymida.com",
+        "login": "sam",
+        "name": "Sam Polanco",
+        "email": "s.polanco@prymida.com"
+      },
+      "sources": [
+        "Reporting Engine"
+      ],
+      "groupByValues": [
+        "File Upload from Critical Systems to Dynamic DNS"
+      ],
+      "createdBy": "File Upload from Critical Systems to Dynamic DNS",
+      "eventCount": 1,
+      "tactics": [],
+      "techniques": [],
+      "statusChangeTime": {
+        "NEW": {
+          "$date": "2024-09-16T22:27:44.978Z"
+        },
+        "ASSIGNED": {
+          "$date": "2024-09-16T22:27:44.979Z"
+        },
+        "IN_PROGRESS": {
+          "$date": "2024-09-16T22:29:05.86Z"
+        }
+      },
+      "history": [
+        {
+          "type": "CREATED",
+          "date": {
+            "$date": "2024-09-16T22:27:44.982Z"
+          },
+          "changedBy": "system"
+        },
+        {
+          "type": "STATUS",
+          "date": {
+            "$date": "2024-09-16T22:29:05.842Z"
+          },
+          "changedBy": "admin",
+          "changedFrom": "ASSIGNED",
+          "changedTo": "IN_PROGRESS"
+        }
+      ],
+      "lastUpdatedByUser": {
+        "id": "admin"
+      },
+      "alerts": [
+        {
+          "_id": {
+            "$oid": "66e8b0dcb0c4931861e79f60"
+          },
+          "receivedTime": {
+            "$date": "2024-09-16T22:27:40.994Z"
+          },
+          "originalHeaders": {
+            "name": "File Upload from Critical Systems to Dynamic DNS",
+            "description": null,
+            "version": 0,
+            "severity": 7,
+            "timestamp": 1726525660000,
+            "signatureId": "RULE_2_20210412161349",
+            "deviceVendor": "RSA",
+            "deviceProduct": "Reporting Engine",
+            "deviceVersion": "12.5.0.0",
+            "uebaSource": null
+          },
+          "originalAlert": {
+            "severity": 7,
+            "signature_id": "RULE_2_20210412161349",
+            "risk_score": 1,
+            "name": "File Upload from Critical Systems to Dynamic DNS",
+            "source": "RSA - Reporting Engine",
+            "datasource_port": "56003",
+            "datasource_host": "192.168.1.111",
+            "events": [
+              {
+                "referer": "http://a82hHasl291js.no-ip.org/test?do=show&subdo=common&test=file_upload",
+                "filetype": "zip,png",
+                "attack_tid": "T1030",
+                "eth_dst_vendor": "Cisco SPVTG",
+                "lifetime": "0",
+                "analysis_source": "http.lua,dyndns.lua,tld.lua,http.lua,http.lua,http.lua,http.lua,http.lua,session.lua,session.lua,session.lua,session.lua,session.lua",
+                "entropy_req": "7994",
+                "language": "English (Canada),English,English (United States),unknown",
+                "sessionid": "580043",
+                "entropy_res": "5112",
+                "rid": "6681",
+                "packets": "80",
+                "isp_dst": "STRATO",
+                "feed_name": "investigation,analysis,investigation,investigation,analysis,investigation,analysis,investigation,analysis,investigation,investigation,analysis,investigation,investigation,analysis,investigation,analysis,investigation,analysis,investigation,analysis,investigation,analysis,investigation,analysis,investigation,analysis,investigation,analysis,investigation",
+                "eth_src": "10:BF:48:BA:EF:B8",
+                "rpackets": "3",
+                "analysis_service": "watchlist file extension,dynamic dns host,dynamic dns http,hostname consecutive consonants,watchlist file extension,http response filename,watchlist file fingerprint,http single request,http post no get,http long user-agent,http not good mozilla",
+                "payload": "92282",
+                "tcp_flags": "26",
+                "alert_id": "nw32545",
+                "asset_comp": "medium",
+                "action": "POST",
+                "tcp_flags_desc": "syn,psh,ack",
+                "attack_tactic": "exfiltration",
+                "country_dst": "Germany",
+                "asset_crit": "High",
+                "fd_name": "Assets",
+                "tcp_dstport": "80",
+                "tcp_srcport": "49825",
+                "analysis_desc": "Any executable extension commonly used with malware like .exe .php .zip etc?,Dynamic DNS web requests,Hostname containing five or more consecutive consonants or two groups of four consecutive consonants,Any executable extension commonly used with malware like .exe .php .zip etc?,Any executable file format commonly used with malware like windows executables JARs etc?,HTTP sessions with at least one POST request and no GET requests,User-agent header length between 75 and 255 characters,A user-agent string without a Mozilla identifier,Between 75% and 100% of the session payload transmitted outbound?,Ports 21 22 23 25 53 80 110 137 138 139 143 443 445,Outbound traffic with two streams and payload greater than zero,A total session size request plus response payload between 50KB and 100KB,outbound traffic with two streams and payload greater than 0 and not service type 53",
+                "streams": "2",
+                "query": "name=\"do\",name=\"subdo\",name=\"file_upload\",filename=\"M_schematic.zip\",name=\"http_submit\"",
+                "sld": "no-ip",
+                "domain_dst": "stratoserver.net",
+                "payload_req": "85059,85059",
+                "ip_dst": "85.214.28.69",
+                "payload_res": "3687,3687",
+                "longdec_dst": "8.4456",
+                "eth_type": "2048",
+                "eth_dst": "60:2A:D0:95:4B:1C",
+                "filename": "upload.php,M_schematic.png",
+                "size": "97119",
+                "domain": "no-ip.org",
+                "tcpflags": "syn,psh,ack",
+                "fd_desc": "Asset information from RSA Archer® IT Security & Risk Management",
+                "city_dst": "Karlsruhe",
+                "rpayload": "3536",
+                "ip_proto": "6",
+                "server": "Apache",
+                "ubc_req": "256",
+                "extension": "php,zip,png",
+                "asset_bu": "Executive",
+                "ubc_res": "71",
+                "alias_host": "a82hHasl291js.no-ip.org",
+                "ip_src": "192.168.70.79",
+                "medium": "1",
+                "inv_context": "event analysis,flow analysis,event analysis,protocol analysis,event analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis,event analysis,protocol analysis",
+                "directory": "/",
+                "asset_risk": "Low",
+                "content": "multipart/form-data,application/x-zip-compressed,spectrum.analyze,text/html,spectrum.consume",
+                "community_id": "1:xMC1T5/h8qAdvCP2SSyiDFdmN5U=",
+                "latdec_dst": "48.9751",
+                "asset_fac": "US",
+                "attachment": "M_schematic.zip",
+                "alert": "File Upload from Critical Systems to Dynamic DNS",
+                "asset_type": "Laptop",
+                "client": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36",
+                "user_agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36",
+                "org_dst": "STRATO",
+                "direction": "outbound",
+                "browserprint": "1541623",
+                "attack_technique": "data transfer size limits",
+                "mcb_req": "116",
+                "mcb_res": "116",
+                "fd_cat": "Operations",
+                "eth_src_vendor": "ASUSTek COMPUTER INC.",
+                "capture_port": "eth0",
+                "tld": "org",
+                "alias_host_hash": "661825FFB179176A3DF91FC9CD82C2FED1069261",
+                "inv_category": "operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations,operations",
+                "mcbc_req": "422",
+                "netname": "private src,other dst",
+                "service": "80",
+                "analysis_context": "Executable extensions most commonly used with malware should be reviewed,Dynamic DNS provides a rapid mechanism for attackers to evade traditional reputation service detections,DNS and domain names can be used for malicious purposes like pointing a Trojan at C2 port calculation or signaling a malicious action,Executable extensions most commonly used with malware should be reviewed,Executable file formats most commonly used with malware should be reviewed,Attackers and malware authors try to blend in with regular network communications. Establishing interactive sessions versus mechanical sessions aids in identifying a malware behavior's bidirectional communications.,User agent analysis helps establish interactive sessions versus mechanical sessions and aid in identifying a malware behavior's bidirectional communications,User agent analysis helps establish interactive sessions versus mechanical sessions and aid in identifying a malware behavior's bidirectional communications,By examining technical aspects of captured sessions like the size and ratio of transmitted vs. received data analyst attain a clearer view into their network,These ports are commonly used with malware,Session attribute analysis further processes a dataset for inspection discarding sessions that may not be useful for an active investigation,Session attribute analysis further processes a dataset for inspection discarding sessions that may not be useful for an active investigation,Session attribute analysis further processes a dataset for inspection discarding sessions that may not be useful for an active investigation",
+                "mcbc_res": "296",
+                "time": "2024-09-16T22:23:47+0000",
+                "analysis_session": "not top 20 dst,top 100k domain,top 10k domain,ratio high transmitted,watchlist port,first carve,session size 50-100k,first carve not dns",
+                "did": "packetdecoder"
+              }
+            ]
+          }
+        }
+      ],
+      "url": "https://uvo1gp037tg5ufq0prf.env.cloudshare.com/respond/incident/INC-126"
+    }
+  ]
+}
