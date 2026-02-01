@@ -9,7 +9,7 @@ Built using Python, Streamlit, and local LLM inference via Ollama, ThreatMinds d
 
 ## Feature & Description 
 ```
-### Log Ingestion & Retrieval - Retrieves and ingests NetWitness log data from uploaded files or defined sources; Handles structured SOC log formats for downstream analysis. 
+Log Ingestion & Retrieval - Retrieves and ingests NetWitness log data from uploaded files or defined sources; Handles structured SOC log formats for downstream analysis. 
 Log Parsing & Normalization - Parses NetWitness logs into a normalized internal representation; Extracts key fields such as incident IDs, timestamps, events, and metadata
 Incident Chunking - Groups multiple alerts into a single incident context; Prevents LLM context overflow while preserving investigation relevance
 Alert Summarization (LLM-Based) - Uses a local Large Language Model (via Ollama) to generate human-readable summaries; Translates raw SOC logs into analyst-friendly explanations 
