@@ -1,6 +1,10 @@
-# 🛡️ SOCGPT – AI-Powered SOC Assistant
+# 🛡️ThreatMinds – AI-Assisted SOC Investigation Chatbot
 
-**SOCGPT** is an advanced AI-powered Security Operations Center (SOC) assistant that automates log analysis, alert summarization, threat triage, remediation suggestions, MITRE ATT&CK mapping, and report delivery through Slack/Email. Built using Python and powered by large language models (LLMs) like GPT-4, it empowers analysts to work faster and more efficiently.
+**ThreatMinds** is an AI-assisted Security Operations Center (SOC) chatbot designed to support security analysts in log investigation, incident triage, MITRE ATT&CK mapping, and remediation guidance.
+
+The system integrates NetWitness log analysis, incident chunking, hybrid AI + rule-based reasoning, and a local Large Language Model (LLM) to automate Level 1–3 SOC investigation workflows while keeping the analyst in control.
+
+Built using Python, Streamlit, and local LLM inference via Ollama, ThreatMinds demonstrates how AI can augment SOC efficiency without fully replacing human analysts.
 
 
 ## 🔧 Feature & Description 
@@ -67,17 +71,9 @@ pip install -r requirements.txt
 
 ---
 
-### 2. 🔑 Set Up Configuration
 
-Edit `config/settings.yaml` and fill in your credentials:
-
-```yaml
-openai_api_key: "your-openai-api-key"
-sender_email: "your.email@example.com"
-email_password: "your-app-password"
 ```
 
-For OpenAI, use a GPT-4-capable key. For email, use an **App Password** (not your Gmail password).
 
 ---
 
@@ -157,33 +153,15 @@ docker build -t socgpt .
 docker run -p 8501:8501 socgpt
 ```
 
----
 
-## 🤖 Future Improvements
 
-* ✅ Slack Bot integration
-* ✅ Threat score visualization in UI
-* 🔄 MISP or Sigma rule integration
-* ⏳ Real-time SIEM log streaming
-* 🧠 Fine-tuned open-source LLM support (LLaMA, Mistral, etc.)
-
----
-
-## 📜 License
-
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 ---
 
 ## ✨ Credits
 
-Developed by **Ninad Joshi**
+Developed by **Ryan Ashwin, Christopher Lee, Harelingwesharan**
 
-MSc Cybersecurity | Cloud & AI Security Enthusiast
-GitHub: [@Ninadjos](https://github.com/Ninadjos)
+
 
 ---
-
-## 💬 Need Help?
-
-Open an issue or message me on LinkedIn or GitHub if you need help or want to collaborate.
