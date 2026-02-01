@@ -25,22 +25,34 @@ ThreatMinds/
 ├── 
 │
 ├── src/                   # Source code
-│   ├── log_analysis.py       # Handles log ingestion(Ryan Ashwin's part)
-│   ├── netwitness_parser.py  # Parses and normalizes NetWitness log formats (Ryan Ashwin's part)    
-│   ├── log_retrieval.py      # Handles log ingestion(Ryan Ashwin's part)
-│   ├── summarizer.py         # Uses LLM to summarize logs(Chris's part)
-│   ├── triage.py             # Severity classification(Ryan Ashwin's part)
-│   ├── remediation.py        # Generates remediation actions (AI / rule-based/Hybrid) (Ryan Ashwin's part)
-│   ├── mitre_mapper.py       # MITRE ATT&CK technique mapping(Chris and team)
-│   ├── rule_engine.py       # MITRE ATT&CK technique mapping(Chris and team)
+│   ├── correlation.py        # Finds relationships between incidents based on IPs, domains, ports, and other IOCs
 │   ├── json_chunker.py       # Incident chunking to manage large log contexts (Ryan Ashwin's part)
-
-
+│   ├── log_analysis.py       # Handles log ingestion(Ryan Ashwin's part)
+│   ├── log_retrieval.py      # Handles log ingestion(Ryan Ashwin's part)
+│   ├── mitre_mapper.py       # MITRE ATT&CK technique mapping(Chris' part)
+│   ├── netwitness_actions.py # Direct query execution handler (Ryan Ashwin's part)
+│   ├── netwitness_automation.py # --------(Hare's part)  
+│   ├── netwitness_client.py   # -------- (Hare's part)
+│   ├── netwitness_manager.py  # Main integration point for NetWitness functionality ('s part)
+│   ├── netwitness_metadata.py # ('s part)
+│   ├── netwitness_models.py  # ('s part)
+│   ├── netwitness_parser.py  # Parses incident and alert data from NetWitness Platform exports(Ryan Ashwin's part)
+│   ├── netwitness_queries.py # Parses incident and alert data from NetWitness Platform exports(Ryan Ashwin's part)
+│   ├── ollama_client.py      # (Chris's part)
+│   ├── persona.py            # Coded SOC analysts roles and responsibilities(Chris's part)
+│   ├── pipeline.py           # ('s part)
+│   ├── remediation.py        # Generates remediation actions (AI / rule-based/Hybrid) (Ryan Ashwin's part)
+│   ├── rule_engine.py        # ('s part)
+│   ├── summarizer.py         # Uses LLM to summarize logs(Ryan Ashwin's/Chris' part)
+│   ├── threat_explainer.py   # (Ryan Ashwin's/Chris' part)
+│   ├── triage.py             # Severity classification(Chris's part)
+│
+│
 │
 ├── api/                   # REST API (FastAPI)
 │   └── main.py               # REST endpoint to submit logs
 │
-├── ui/                    # Streamlit or Web UI
+├── ui/                    # Streamlit web user interface
 │   └── app.py
 
 ├── config/                # Config files (API keys, mappings)
@@ -76,18 +88,25 @@ pip install -r requirements.txt
 ```bash
 ollama run alienintelligence/cyberaisecurity:latest
 ````
+                 ## OR
+                 
+## Running the SOC Chatbot on GPU Cloud Instances(e.g. Lambda Cloud)
+```bash
+Use the Installation guide found in GPU Cloud branch
+````
 
 ### Run the Streamlit UI
 ```bash
-streamlit run ui/chatbot.py
+streamlit run ui/app.py
+
 
 Once the application is running, you can:
 
-Upload NetWitness log files for analysis
+- Upload NetWitness log files for analysis
 
-Ask investigation and triage questions as a SOC analyst
+- Ask investigation and triage questions as a SOC analyst
 
-View MITRE ATT&CK mappings and remediation recommendations
+- View MITRE ATT&CK mappings and remediation recommendations
 
 The chatbot interface will be available at:
 http://localhost:8501
