@@ -66,7 +66,7 @@ ThreatMinds/
 pip install -r requirements.txt
 ````
 
-> You need Python 3.8 or later.
+> You need Python 3.12 or later.
 
 ---
 ## 🚀 Running the SOC Chatbot Locally
