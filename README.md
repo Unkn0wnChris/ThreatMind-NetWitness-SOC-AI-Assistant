@@ -119,6 +119,11 @@ You can now upload logs via the browser and get real-time AI analysis.
 
 Developed by **Christopher Lee Shiven Jian Fu, Ryan Ashwin s/o Ashraf Ali,  Harelingeshwaran S/O Kaliyaperumal**
 
+## Acknowledgments
+
+This project was inspired by a developer's repository:https://github.com/Ninadjos/SOCGPT-AI-Powered-SOC-Assistant.git
+
+This repository gave the team a starting reference and the system has been developed and modified significantly to meet the objectives and scope of the Final Year Project
 
 
 ---
