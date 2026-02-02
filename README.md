@@ -58,8 +58,7 @@ ThreatMinds/
 ├── config/                # Config files (API keys, mappings)
 │   └── settings.yaml
 │
-├── docs/                  # Project documentation
-│   ├── architecture.png
+
 │   └── README.md
 │
 ├── .env                      # Environment variables (never push to GitHub)
