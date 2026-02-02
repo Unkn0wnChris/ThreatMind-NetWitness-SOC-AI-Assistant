@@ -34,11 +34,11 @@ class NetWitnessActions:
             
             # Add additional details
             response = f"""
-🔍 **INCIDENT DETAILS: {incident_id}**
+ **INCIDENT DETAILS: {incident_id}**
 
 {formatted}
 
-📊 **Summary:**
+ **Summary:**
 - Incident Title: {incident_sum.title}
 - Status: {incident_sum.status}
 - Priority: {incident_sum.priority}
@@ -46,14 +46,14 @@ class NetWitnessActions:
 - Last Updated: {incident_sum.last_updated}
 - Related Alerts: {len(alerts)}
 
-🎯 **Key Information:**
+ **Key Information:**
 - Source IPs: {', '.join(incident_sum.source_ips or ['None'])}
 - Destination IPs: {', '.join(incident_sum.destination_ips or ['None'])}
 """
             return response
             
         except Exception as e:
-            return f"❌ Error retrieving incident {incident_id}: {str(e)}"
+            return f" Error retrieving incident {incident_id}: {str(e)}"
     
     def get_incident_stats(self, time_range: str = "last 7 days") -> str:
         """Get incident statistics"""
@@ -67,10 +67,10 @@ class NetWitnessActions:
                 until=time_params.get('until')
             )
             
-            return f"📈 **Incident Statistics ({time_range}):**\n\n{stats_text}"
+            return f" **Incident Statistics ({time_range}):**\n\n{stats_text}"
             
         except Exception as e:
-            return f"❌ Error retrieving statistics: {str(e)}"
+            return f" Error retrieving statistics: {str(e)}"
     
     def search_by_ip(self, ip_address: str) -> str:
         """Search for sessions by IP address"""
@@ -78,11 +78,11 @@ class NetWitnessActions:
             sessions = query_sessions_by_ip(self.client, ip_address, limit=20)
             
             if not sessions or 'results' not in sessions or len(sessions.get('results', [])) == 0:
-                return f"🔍 No sessions found for IP: {ip_address}"
+                return f" No sessions found for IP: {ip_address}"
             
             results = sessions.get('results', [])[:10]  # Limit to 10 sessions
             
-            response_lines = [f"📡 **Sessions for IP {ip_address}:**", ""]
+            response_lines = [f" **Sessions for IP {ip_address}:**", ""]
             
             for idx, session in enumerate(results, 1):
                 session_id = session.get('id', 'N/A')
@@ -96,12 +96,12 @@ class NetWitnessActions:
                 response_lines.append(f"   - Protocol: {session.get('service', session.get('protocol', 'N/A'))}")
                 response_lines.append("")
             
-            response_lines.append(f"📊 Total sessions found: {len(sessions.get('results', []))} (showing 10)")
+            response_lines.append(f" Total sessions found: {len(sessions.get('results', []))} (showing 10)")
             
             return "\n".join(response_lines)
             
         except Exception as e:
-            return f"❌ Error searching for IP {ip_address}: {str(e)}"
+            return f" Error searching for IP {ip_address}: {str(e)}"
     
     def get_recent_alerts(self, count: int = 10, time_range: str = "last 24 hours") -> str:
         """Get recent alerts"""
@@ -116,9 +116,9 @@ class NetWitnessActions:
             )
             
             if total_count == 0:
-                return f"🔔 No alerts found for the specified time period ({time_range})."
+                return f" No alerts found for the specified time period ({time_range})."
             
-            response_lines = [f"🚨 **Recent Alerts ({time_range}):**", f"Total alerts: {total_count}", ""]
+            response_lines = [f" **Recent Alerts ({time_range}):**", f"Total alerts: {total_count}", ""]
             
             for idx, alert in enumerate(alerts[:count], 1):
                 response_lines.append(f"{idx}. **{alert.title}**")
@@ -133,7 +133,7 @@ class NetWitnessActions:
             return "\n".join(response_lines)
             
         except Exception as e:
-            return f"❌ Error retrieving alerts: {str(e)}"
+            return f" Error retrieving alerts: {str(e)}"
     
     def _parse_time_range(self, time_range: str) -> Dict[str, Optional[str]]:
         """Parse time range string to date parameters"""
@@ -160,3 +160,4 @@ class NetWitnessActions:
             last_week = (now - timedelta(days=7)).strftime('%Y-%m-%d')
 
             return {'since': last_week}
+
