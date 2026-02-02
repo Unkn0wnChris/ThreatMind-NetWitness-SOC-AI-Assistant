@@ -1,6 +1,4 @@
-# ============================================================
 # PATH & STANDARD IMPORTS
-# ============================================================
 import sys
 import os
 import json
@@ -15,18 +13,16 @@ from urllib.parse import urlparse
 # Ensure project root is on sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-# ============================================================
-# SRC IMPORTS
-# ============================================================
+
+# Src file Imports
 from src.ollama_client import ollama_query, check_ollama_connection
 from src.persona import Analyst_Persona
 from src.summarizer import summarize_alert
 from src.triage import triage_alert
 from src.mitre_mapper import MITRE_Mapping
 
-# ============================================================
+
 # NETWITNESS IMPORTS
-# ============================================================
 from src.netwitness_client import NetWitnessConfig, NetWitnessClient
 from src.netwitness_queries import(
     get_incident_with_related_alerts,
@@ -54,9 +50,9 @@ except Exception:
     PIPELINE_AVAILABLE = False
 
 
-# ============================================================
+
 # SAFE HELPER: ENSURE JSON STRING
-# ============================================================
+
 
 def ensure_json_str(x) -> str:
     """
@@ -68,9 +64,8 @@ def ensure_json_str(x) -> str:
         return str(x)
 
 
-# ============================================================
+
 # Prompt Parsing Helper (NetWitness)
-# ============================================================
 INC_RE = re.compile(r"\bINC-\d+\b",re.IGNORECASE)
 IP_RE = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
 
@@ -86,9 +81,8 @@ def prompt_needs_netwitness(prompt: str) -> bool:
     p = (prompt or "").lower()
     return any(k in p for k in ["incident", "inc-", "alert", "alerts", "mtta", "mttd", "mttr", "stats", "session", "metadata" ])
 
-# ============================================================
+
 # CLOUDSHARE NETWITNESS CONNECTION - UPDATED WITH CORRECT PARAMETERS
-# ============================================================
 def clean_domain(host: str) -> str:
     """Clean domain by removing protocol and port"""
     host = host.strip().rstrip("/")
@@ -153,11 +147,11 @@ def build_netwitness_context(prompt: str) -> str:
             except Exception as e:
                 msg = f"Failed to fetch incident {inc_id}:\n{type(e).__name__}: {e}"
                 if "404" in str(e):
-                    msg += "\n⚠️ Incident not found. Try 'recent alerts' or 'incident stats' to see available IDs."
+                    msg += "\n Incident not found. Try 'recent alerts' or 'incident stats' to see available IDs."
                 elif "401" in str(e) or "403" in str(e):
-                    msg += "\n⚠️ Auth error. Verify Respond credentials and token acquisition."
+                    msg += "\n Auth error. Verify Respond credentials and token acquisition."
                 elif "500" in str(e):
-                    msg += "\n⚠️ Server error from Respond API (500). In CloudShare this sometimes happens when:"
+                    msg += "\n Server error from Respond API (500). In CloudShare this sometimes happens when:"
                     msg += "\n  • the INC-ID does not exist (API returns 500 instead of 404), or"
                     msg += "\n  • the proxy/WAF dislikes explicit :443 in the URL, or"
                     msg += "\n  • the incident record has a backend error."
@@ -169,13 +163,13 @@ def build_netwitness_context(prompt: str) -> str:
                         recent_text = json.dumps(recent)[:5000]
                         ids = sorted(set(re.findall(r"INC-\\d+", recent_text)))
                         if ids:
-                            msg += "\n\n✅ Here are some incident IDs available in your environment:"
+                            msg += "\n\n Here are some incident IDs available in your environment:"
                             msg += "\n" + ", ".join(ids[:10])
                             msg += "\n\nTry: Show " + ids[0]
                         else:
-                            msg += "\n\nℹ️ Could not extract incident IDs from the list response."
+                            msg += "\n\n Could not extract incident IDs from the list response."
                     except Exception as list_err:
-                        msg += f"\n\nℹ️ Also failed to list incidents: {type(list_err).__name__}: {list_err}"
+                        msg += f"\n\n Also failed to list incidents: {type(list_err).__name__}: {list_err}"
                 return msg
 
         # 2) Stats flow
@@ -216,9 +210,7 @@ def build_netwitness_context(prompt: str) -> str:
         return f"Error connecting to NetWitness:\n{type(e).__name__}: {e}"
 
 
-# ============================================================
 # TEST CLOUDSHARE CONNECTION FUNCTION
-# ============================================================
 def test_cloudshare_connection(host: str, username: str, respond_password: str, metadata_password) -> dict:
     """
     Test connection to your specific CloudShare NetWitness instance
@@ -254,7 +246,7 @@ def test_cloudshare_connection(host: str, username: str, respond_password: str, 
         token = test_client.authenticate()
         
         results["connected"] = True
-        results["message"] = f"✅ Successfully connected to CloudShare NetWitness at {domain}"
+        results["message"] = f" Successfully connected to CloudShare NetWitness at {domain}"
         results["details"] = {
             "domain": domain,
             "authenticated": True if token else False,
@@ -270,7 +262,7 @@ def test_cloudshare_connection(host: str, username: str, respond_password: str, 
         
     except Exception as e:
         results["connected"] = False
-        results["message"] = f"❌ Failed to connect to CloudShare NetWitness"
+        results["message"] = f" Failed to connect to CloudShare NetWitness"
         results["error"] = str(e)
         results["details"] = {
             "domain": clean_domain(host),
@@ -284,15 +276,12 @@ def test_cloudshare_connection(host: str, username: str, respond_password: str, 
     
     return results
 
-# ============================================================
-# STREAMLIT CONFIG
-# ============================================================
-st.set_page_config(page_title="SOCGPT – AI-Powered SOC Assistant", layout="wide")
-st.title("🔎 SOC AI-Powered Assistant (CloudShare NetWitness)")
 
-# ============================================================
+# STREAMLIT CONFIG
+st.set_page_config(page_title="SOCGPT – AI-Powered SOC Assistant", layout="wide")
+st.title(" SOC AI-Powered Assistant (CloudShare NetWitness)")
+
 # SESSION STATE DEFAULTS
-# ============================================================
 defaults = {
     # Single-log cache (preserved)
     "analysis_cache": {},
@@ -321,7 +310,7 @@ defaults = {
     "nw_host": "uvo1gp037tg5ufq0prf.vm.cld.sr",
     "nw_username": "admin",
 
-    # ✅ store 2 passwords
+    #  store 2 passwords
     "nw_respond_password": "",
     "nw_metadata_password": "",
 
@@ -331,20 +320,17 @@ defaults = {
 for k, v in defaults.items():
     st.session_state.setdefault(k, v)
 
-# ============================================================
+
 # OLLAMA HEALTH CHECK
-# ============================================================
 if not st.session_state.ollama_checked:
     st.session_state.ollama_checked = True
     if not check_ollama_connection():
-        st.error("❌ Ollama is not running")
+        st.error(" Ollama is not running")
         st.stop()
 
-# ============================================================
 # SIDEBAR – SETTINGS & NETWITNESS CONFIG
-# ============================================================
 with st.sidebar:
-    st.header("⚙️ Settings")
+    st.header(" Settings")
     Persona = st.selectbox("Analyst Persona", list(Analyst_Persona.keys()))
     st.info(Analyst_Persona[Persona])
 
@@ -354,9 +340,9 @@ with st.sidebar:
 
     # YOUR CLOUDSHARE NETWITNESS CONFIGURATION
     st.divider()
-    st.header("🌐 CloudShare NetWitness Configuration")
+    st.header(" CloudShare NetWitness Configuration")
     
-    st.success("✅ **Your CloudShare Instance Configured**")
+    st.success(" **Your CloudShare Instance Configured**")
     st.markdown("""
     **Your Instance Details:**
     - **Domain:** `uvo1gp037tg5ufq0prf.vm.cld.sr`
@@ -397,7 +383,7 @@ with st.sidebar:
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        if st.button("💾 Save", use_container_width=True):
+        if st.button(" Save", use_container_width=True):
             st.session_state.nw_host = nw_host.strip()
             st.session_state.nw_username = nw_username.strip()
             st.session_state.nw_respond_password = nw_respond_password.strip()
@@ -412,7 +398,7 @@ with st.sidebar:
             st.rerun()
     
     with col2:
-        if st.button("🔗 Test", use_container_width=True):
+        if st.button(" Test", use_container_width=True):
             if not nw_host or not nw_username or not nw_respond_password or not nw_metadata_password:
                 st.error("Please fill: host, username, Respond password, Metadata password")
 
@@ -441,7 +427,7 @@ with st.sidebar:
                                     st.write(f"- {suggestion}")
     
     with col3:
-        if st.button("🔄 Reset", use_container_width=True):
+        if st.button(" Reset", use_container_width=True):
             st.session_state.nw_client = None
             st.session_state.nw_connection_status = None
             st.success("Connection reset")
@@ -451,9 +437,9 @@ with st.sidebar:
     if st.session_state.get("nw_connection_status") is not None:
         status = st.session_state.nw_connection_status
         if status.get("connected"):
-            st.success(f"✅ Connected to: {status.get('details', {}).get('domain', 'CloudShare')}")
+            st.success(f" Connected to: {status.get('details', {}).get('domain', 'CloudShare')}")
         else:
-            st.error("❌ Not connected to CloudShare")
+            st.error(" Not connected to CloudShare")
     
     # Quick incident test
     st.divider()
@@ -469,7 +455,7 @@ with st.sidebar:
                     if "Failed" in context or "error" in context.lower():
                         st.error(f"Failed: {context}")
                     else:
-                        st.success(f"✅ Fetched {test_incident}")
+                        st.success(f" Fetched {test_incident}")
                         with st.expander("Preview", expanded=True):
                             st.text_area("Incident Data", context[:1000] + ("..." if len(context) > 1000 else ""), height=150)
                 except Exception as e:
@@ -477,7 +463,7 @@ with st.sidebar:
     
     st.divider()
     
-    if st.button("🔌 Check Ollama Connection"):
+    if st.button(" Check Ollama Connection"):
         if check_ollama_connection():
             st.success("Ollama connected")
         else:
@@ -506,10 +492,8 @@ with st.sidebar:
         st.success("Pipeline cleared")
         st.rerun()
 
-# ============================================================
-# ONE UPLOADER (Unified)
-# ============================================================
-st.markdown("## 📥 Upload / Paste Alert or Log")
+# ONE UPLOADER
+st.markdown("##  Upload / Paste Alert or Log")
 
 uploaded_file = st.file_uploader(
     "Upload JSON/TXT log. NetWitness incident JSON will auto-run pipeline if available.",
@@ -545,9 +529,8 @@ def looks_like_netwitness_incident(obj: dict) -> bool:
         return False
     return any(k in obj for k in ("incidents", "alerts", "originalAlert", "events"))
 
-# ============================================================
+
 # AUTO-ROUTE TO PIPELINE OR SINGLE-LOG
-# ============================================================
 use_pipeline = False
 is_netwitness_like = parsed_json is not None and looks_like_netwitness_incident(parsed_json)
 
@@ -556,9 +539,8 @@ if is_netwitness_like and PIPELINE_AVAILABLE:
 elif is_netwitness_like and not PIPELINE_AVAILABLE:
     st.info("NetWitness pipeline modules not available; falling back to single-log workflow.")
 
-# ============================================================
+
 # RUN PIPELINE
-# ============================================================
 if use_pipeline:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as tmp:
         tmp.write(log_input.encode("utf-8"))
@@ -570,11 +552,9 @@ if use_pipeline:
     st.session_state.correlation_engine = CorrelationEngine(retriever.logs)
     st.success(f"Loaded {len(retriever.logs)} incident chunks")
 
-# ============================================================
 # MAIN UI: PIPELINE MODE
-# ============================================================
 if st.session_state.logs:
-    st.subheader("🧠 AI Log Analysis (Pipeline)")
+    st.subheader(" AI Log Analysis (Pipeline)")
 
     for idx, log in enumerate(st.session_state.logs):
         cache_key = f"log_{idx}"
@@ -599,7 +579,7 @@ if st.session_state.logs:
 
             # MANUAL mode
             else:
-                if st.button("🔍 Analyze Log", key=f"analyze_{idx}", use_container_width=True):
+                if st.button(" Analyze Log", key=f"analyze_{idx}", use_container_width=True):
                     if cache_key not in st.session_state.log_analysis_cache:
                         st.session_state.log_analysis_cache[cache_key] = {
                             "summary": summarize_alert(log_str, Persona),
@@ -650,16 +630,15 @@ if st.session_state.logs:
                     with tab3:
                         st.code(log_str, language="json")
 
-# ============================================================
+
 # SINGLE LOG MODE (ONLY IF WE HAVE A LOG)
-# ============================================================
 elif has_log:
-    st.subheader("🧾 Single Log Analysis")
+    st.subheader(" Single Log Analysis")
 
     col1, col2 = st.columns(2)
 
     with col1:
-        st.markdown("## 🤖 Incident Summary")
+        st.markdown("##  Incident Summary")
         summary = st.session_state.analysis_cache.get((log_input, "summary"))
         if summary is None:
             summary = summarize_alert(log_input, persona=Persona)
@@ -667,7 +646,7 @@ elif has_log:
         st.markdown(summary)
 
     with col1:
-        st.markdown("## 🚨 Severity Level")
+        st.markdown("## Severity Level")
         severity = st.session_state.analysis_cache.get((log_input, "severity"))
         if severity is None:
             severity = triage_alert(log_input, persona=Persona)
@@ -675,7 +654,7 @@ elif has_log:
         st.markdown(f"### **{severity}**")
 
     with col2:
-        st.markdown("## 🎯 MITRE ATT&CK Mapping")
+        st.markdown("##  MITRE ATT&CK Mapping")
         mitre_hits = st.session_state.analysis_cache.get((log_input, "mitre"))
         if mitre_hits is None:
             try:
@@ -698,7 +677,7 @@ elif has_log:
         else:
             st.info("No MITRE techniques detected.")
 
-    st.markdown("## 🛠️ Recommended Remediation")
+    st.markdown("##  Recommended Remediation")
     remediation_value = st.session_state.analysis_cache.get((log_input, "remediation"))
     if remediation_value is None:
         remediation_value = suggest_remediation(
@@ -707,11 +686,10 @@ elif has_log:
         st.session_state.analysis_cache[(log_input, "remediation")] = remediation_value
     st.markdown(remediation_value)
 
-# ============================================================
+
 # NO LOG MODE (WHEN NO LOG IS PROVIDED)
-# ============================================================
 else:
-    st.info("📝 **Welcome!** Please upload a log file or paste log text above to see AI-powered analysis.")
+    st.info("Please upload a log file or paste log text above to see AI-powered analysis.")
     st.markdown("""
     ### What you can do:
     1. **Upload a log file** (JSON or TXT format)
@@ -726,15 +704,14 @@ else:
     - IDS/IPS alerts
     """)
 
-# ============================================================
+
 # CHAT SECTION WITH YOUR CLOUDSHARE NETWITNESS INTEGRATION
-# ============================================================
 st.markdown("---")
-st.header("💬 Chat with SOCGPT - Connected to Your CloudShare NetWitness")
+st.header(" Chat with SOCGPT - Connected to Your CloudShare NetWitness")
 
 # Show CloudShare status prominently
 if st.session_state.get("nw_configured") and st.session_state.get("nw_connection_status") and st.session_state.nw_connection_status.get("connected"):
-    st.success(f"✅ **Connected to CloudShare:** {st.session_state.nw_host}")
+    st.success(f" **Connected to CloudShare:** {st.session_state.nw_host}")
     st.markdown("""
     **Ask about real incidents in your CloudShare instance:**
     - "Show INC-97" - Fetch specific incident
@@ -744,10 +721,10 @@ if st.session_state.get("nw_configured") and st.session_state.get("nw_connection
     - "Compare INC-10 and INC-20" - Compare incidents
     """)
 elif st.session_state.get("nw_configured"):
-    st.warning("⚠️ **CloudShare Configured but Not Connected**")
+    st.warning(" **CloudShare Configured but Not Connected**")
     st.markdown("Click 'Test' in sidebar to establish connection")
 else:
-    st.info("🔧 **Configure CloudShare in sidebar** to fetch real incident data")
+    st.info(" **Configure CloudShare in sidebar** to fetch real incident data")
 
 # Show chat history
 for msg in st.session_state.chat_history:
@@ -772,7 +749,7 @@ if st.button("Send", use_container_width=True) and user_prompt.strip():
     if use_nw:
         if not st.session_state.get("nw_configured"):
             answer = """
-⚠️ **CloudShare NetWitness Not Configured**
+ **CloudShare NetWitness Not Configured**
 
 Please configure your CloudShare NetWitness connection in the sidebar:
 1. Domain: `uvo1gp037tg5ufq0prf.vm.cld.sr` (pre-filled)
@@ -781,7 +758,7 @@ Please configure your CloudShare NetWitness connection in the sidebar:
 4. Click "Save" then "Test"
 """
         else:
-            with st.spinner("🔍 Fetching real data from your CloudShare NetWitness..."):
+            with st.spinner(" Fetching real data from your CloudShare NetWitness..."):
                 try:
                     context = build_netwitness_context(prompt)
                     
@@ -807,12 +784,12 @@ INSTRUCTIONS:
 ANSWER BASED ON REAL CLOUDSHARE DATA:
 """
                         answer = ollama_query(final_prompt)
-                        answer = f"**🌐 REAL DATA FROM YOUR CLOUDSHARE NETWITNESS**\n\n{answer}"
+                        answer = f"** REAL DATA FROM YOUR CLOUDSHARE NETWITNESS**\n\n{answer}"
                     
                     elif "Failed" in context or "error" in context.lower():
                         # Connection/query failed
                         answer = f"""
-⚠️ **CloudShare Query Failed**
+**CloudShare Query Failed**
 
 {context}
 
@@ -837,7 +814,7 @@ Provide general SOC analysis and suggest specific incident IDs or queries.
                     
                 except Exception as e:
                     answer = f"""
-❌ **Error querying CloudShare NetWitness**
+ **Error querying CloudShare NetWitness**
 
 Error: {str(e)}
 
