@@ -59,7 +59,7 @@ ThreatMinds/
 │   └── settings.yaml
 │
 
-│   └── README.md
+├──  Installation Guide.docx  #If using GPU cloud to speed up inference of LLM query and response 
 │
 ├── .env                      # Environment variables (never push to GitHub)
 ├── requirements.txt          # Python dependencies
