@@ -25,27 +25,26 @@ ThreatMinds/
 ├── 
 │
 ├── src/                   # Source code
-│   ├── correlation.py        # Finds relationships between incidents based on IPs, domains, ports, and other IOCs
-│   ├── json_chunker.py       # Incident chunking to manage large log contexts (Ryan Ashwin's part)
-│   ├── log_analysis.py       # Handles log ingestion(Ryan Ashwin's part)
-│   ├── log_retrieval.py      # Handles log ingestion(Ryan Ashwin's part)
+│   ├── correlation.py        # Finds relationships between incidents based on IPs, domains, ports, and other IOCs(Ryan's part)
+│   ├── json_chunker.py       # Incident chunking to manage large log contexts (Ryan's part)
+│   ├── log_analysis.py       # Handles log ingestion(Ryan's part)
+│   ├── log_retrieval.py      # Handles log ingestion(Ryan's part)
 │   ├── mitre_mapper.py       # MITRE ATT&CK technique mapping(Chris' part)
-│   ├── netwitness_actions.py # Direct query execution handler (Ryan Ashwin's part)
+│   ├── netwitness_actions.py # Direct query execution handler (Ryan's part)
 │   ├── netwitness_automation.py # Automates incident statistics (MTTA / MTTD / MTTR) (Hare's part)  
 │   ├── netwitness_client.py   # Handles authentication, tokens, API calls (Respond & Metadata) (Hare's part)
-│   ├── netwitness_manager.py  # Main integration point for NetWitness functionality (Chris/
-Hare's part)
+│   ├── netwitness_manager.py  # Main integration point for NetWitness functionality (Chris/Hare's part)
 │   ├── netwitness_metadata.py # Queries sessions and network metadata (IP-based investigations)(Hare's part)
 │   ├── netwitness_models.py  # Defines clean data models (IncidentSummary, AlertSummary (Hare's part)
-│   ├── netwitness_parser.py  # Parses incident and alert data from NetWitness Platform exports(Ryan Ashwin's part)
+│   ├── netwitness_parser.py  # Parses incident and alert data from NetWitness Platform exports(Ryan's part)
 │   ├── netwitness_queries.py # Fetches incidents, alerts, relationships, and formats summaries (Hare's Part)
 │   ├── ollama_client.py      # (Chris's part)
 │   ├── persona.py            # Coded SOC analysts roles and responsibilities(Chris's part)
-│   ├── pipeline.py           # ('s part)
-│   ├── remediation.py        # Generates remediation actions (AI / rule-based/Hybrid) (Ryan Ashwin's part)
-│   ├── rule_engine.py        # ('s part)
-│   ├── summarizer.py         # Uses LLM to summarize logs(Ryan Ashwin's/Chris' part)
-│   ├── threat_explainer.py   # (Ryan Ashwin's/Chris' part)
+│   ├── pipeline.py           # (Ryan's part)
+│   ├── remediation.py        # Generates remediation actions (AI / rule-based/Hybrid) (Ryan's part)
+│   ├── rule_engine.py        # (Ryan's part)
+│   ├── summarizer.py         # Uses LLM to summarize logs(Ryan's/Chris' part)
+│   ├── threat_explainer.py   # (Ryan's/Chris' part)
 │   ├── triage.py             # Severity classification(Chris's part)
 │
 │
