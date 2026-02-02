@@ -39,9 +39,8 @@ class NetWitnessClient:
         self.session = requests.Session()
         self.session.verify = config.verify_ssl
 
-    #--------------------------
-    # URL Builders
-    #--------------------------   
+
+    # URL Builders  
     def _respond_base_url(self) -> str:
         # Avoid explicitly adding :443 for standard HTTPS, as some proxies/WAFs behave oddly with explicit 443
         if int(self.config.respond_port) == 443:
@@ -54,9 +53,7 @@ class NetWitnessClient:
             return f"https://{self.config.domain}"
         return f"https://{self.config.domain}:{port}"
     
-    #--------------------------
     # Token Authentication (Respond API)
-    #--------------------------
     def authenticate(self, force: bool = False) -> str:
         '''
         Obtain (or reuse) access token for Respond API
@@ -122,9 +119,8 @@ class NetWitnessClient:
             return {}
         return response.json()
     
-    #--------------------------
+    
     # Respond API: incidents/alerts
-    #-------------------------
     def get_incidents(self, incident_id: str) -> Dict[str, Any]:
         # Get /rest/api/incidents/{INC-ID}
         return self._respond_get(f"/rest/api/incidents/{incident_id}")
@@ -185,9 +181,7 @@ class NetWitnessClient:
             params["until"] = until
         return self._respond_get("/rest/api/incidents/stats", params=params)
     
-    #--------------------------
     # Metadata API: /sdk query endpoint on port 12346 or 50103
-    #--------------------------
     def metadata_query(self, netwitness_query: str) -> Dict[str, Any]:
         """
         Execute Metadata API query via /sdk endpoint with Basic Auth
@@ -227,9 +221,7 @@ class NetWitnessClient:
         raise RuntimeError(f"Metadata query failed on ports {ports}. Last error: {last_err}")
 
     
-    #--------------------------
     # Convenience: consolidate IP metadata
-    #-------------------------
     @staticmethod
     def extract_metadata_ips(obj: Dict[str, Any]) -> Tuple[List[str], List[str]]:
         '''
@@ -253,4 +245,5 @@ class NetWitnessClient:
         src_ips = sorted(set(src_ips))
         dst_ips = sorted(set(dst_ips))
         return src_ips, dst_ips
+
             
