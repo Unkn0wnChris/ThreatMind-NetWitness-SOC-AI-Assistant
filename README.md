@@ -91,7 +91,7 @@ ollama run alienintelligence/cyberaisecurity:latest
                   OR
                  
 Running the SOC Chatbot on GPU Cloud Instances(e.g. Lambda Cloud)
-- Use the Installation guide found in GPU Cloud branch
+- Use the Installation guide 
 ````
 
 ### Run the Streamlit UI
