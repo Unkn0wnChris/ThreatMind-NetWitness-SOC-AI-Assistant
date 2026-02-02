@@ -263,7 +263,7 @@ Return ONLY valid JSON, no other text.
         results.sort(key=lambda x: x["relevance_score"], reverse=True)
         return results[:top_k]
     
-    #Creeation of formatted summary of relevance score and previewing of log 
+    #Creation of formatted summary of relevance score and previewing of log 
     def get_logs_summary(self, logs: List[Dict]) -> str:
         """
         Generate a summary of retrieved logs.
@@ -283,3 +283,4 @@ Return ONLY valid JSON, no other text.
             summary += f"   {log_entry['log'][:150]}...\n\n"
         
         return summary
+
