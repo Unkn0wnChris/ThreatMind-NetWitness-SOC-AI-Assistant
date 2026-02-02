@@ -55,7 +55,6 @@ ThreatMinds/
 │   ├── triage.py             # Severity classification(Chris's part)
 │
 │
-│
 ├── api/                   # REST API (FastAPI)
 │   └── main.py               # REST endpoint to submit logs
 │
@@ -71,6 +70,7 @@ ThreatMinds/
 ├── .env                      # Environment variables (never push to GitHub)
 ├── requirements.txt          # Python dependencies
 ├── README.md                 # GitHub landing page
+
 ```
 
 
