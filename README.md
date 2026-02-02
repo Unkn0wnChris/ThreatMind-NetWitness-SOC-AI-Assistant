@@ -38,13 +38,13 @@ ThreatMinds/
 │   ├── netwitness_models.py  # Defines clean data models (IncidentSummary, AlertSummary (Hare's part)
 │   ├── netwitness_parser.py  # Parses incident and alert data from NetWitness Platform exports(Ryan's part)
 │   ├── netwitness_queries.py # Fetches incidents, alerts, relationships, and formats summaries (Hare's Part)
-│   ├── ollama_client.py      # (Chris's part)
+│   ├── ollama_client.py      # Local LLM wrapper: sends prompts to Ollama + returns responses consistently (Chris's part)
 │   ├── persona.py            # Coded SOC analysts roles and responsibilities(Chris's part)
-│   ├── pipeline.py           # (Ryan's part)
+│   ├── pipeline.py           # End-to-end ingestion pipeline: parse incident → chunk → return retriever object for AI/correlation (Ryan's part)
 │   ├── remediation.py        # Generates remediation actions (AI / rule-based/Hybrid) (Ryan's part)
-│   ├── rule_engine.py        # (Ryan's part)
+│   ├── rule_engine.py        # Loads remediation rules + matches conditions against incident events to trigger persona-specific actions Ryan's part)
 │   ├── summarizer.py         # Uses LLM to summarize logs(Ryan's/Chris' part)
-│   ├── threat_explainer.py   # (Ryan's/Chris' part)
+│   ├── threat_explainer.py   # Converts detection output into “what happened / why it matters / next steps” narrative (Ryan's/Chris' part)
 │   ├── triage.py             # Severity classification(Chris's part)
 │
 │
